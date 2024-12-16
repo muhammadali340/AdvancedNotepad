@@ -31,22 +31,25 @@ jobs:
           api-level: 30
           build-tools-version: 30.0.3
 
-      # Step 4: Install Node.js and dependencies in the root directory
+      # Step 4: Install Node.js in the root directory
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'  # Use the appropriate Node.js version for your project
 
+      # Step 5: Install npm dependencies in the root directory where package.json is located
       - name: Install npm dependencies
         run: |
+          cd AdvancedNotepad  # Navigate to the root directory where package.json is located
           npm install  # Install dependencies in the root directory
 
-      # Step 5: Run postinstall script to ensure necessary files are linked
+      # Step 6: Run postinstall script to ensure necessary files are linked
       - name: Run postinstall
         run: |
+          cd AdvancedNotepad  # Ensure we are in the correct directory
           npm run postinstall  # Link necessary files after install
 
-      # Step 6: Cache Gradle dependencies
+      # Step 7: Cache Gradle dependencies
       - name: Cache Gradle dependencies
         uses: actions/cache@v3
         with:
@@ -55,14 +58,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # Step 7: Build APK
+      # Step 8: Build APK
       - name: Build APK
         run: |
           cd AdvancedNotepad/android/android  # Navigate to the Android directory
           chmod +x gradlew  # Ensure gradlew is executable
           ./gradlew assembleRelease  # Run Gradle build
 
-      # Step 8: Upload APK as an artifact
+      # Step 9: Upload APK as an artifact
       - name: Upload APK as an artifact
         uses: actions/upload-artifact@v3
         with:
