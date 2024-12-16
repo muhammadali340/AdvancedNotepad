@@ -40,13 +40,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # Step 5: Install dependencies and build the APK
+      # Step 5: Run Gradle Build (make sure to run it from the correct directory)
       - name: Build APK
-        run: ./gradlew assembleRelease
+        run: |
+          cd AdvancedNotepad/android/android  # Navigate to the directory with gradlew.bat
+          chmod +x gradlew  # Ensure the Gradle wrapper is executable
+          ./gradlew assembleRelease  # Run Gradle build
 
       # Step 6: Upload APK as an artifact (optional)
       - name: Upload APK as an artifact
         uses: actions/upload-artifact@v3
         with:
           name: app-release.apk
-          path: app/build/outputs/apk/release/app-release.apk
+          path: AdvancedNotepad/android/android/app/build/outputs/apk/release/app-release.apk
