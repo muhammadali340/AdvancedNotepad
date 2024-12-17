@@ -19,14 +19,20 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
+    - name: List directory contents
+      run: |
+        ls -R AdvancedNotepad/android
+
+    - name: Make gradlew executable
+      run: chmod +x AdvancedNotepad/android/android/gradlew
+
     - name: Generate native_modules.gradle
       run: |
         cd AdvancedNotepad/android/android
-        # Add commands to generate or copy the native_modules.gradle file
-        # For example:
-        # cp ../native_modules.gradle ./native_modules.gradle
+        # If native_modules.gradle doesn't exist, create an empty one
+        touch native_modules.gradle
 
     - name: Build with Gradle
       run: |
-        cd AdvancedNotepad/android
+        cd AdvancedNotepad/android/android
         ./gradlew build
