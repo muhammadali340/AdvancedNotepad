@@ -13,42 +13,24 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Set up JDK 17
+    - name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        java-version: '17'
-        distribution: 'temurin'
-
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-
-    - name: Install dependencies
-      run: |
-        cd AdvancedNotepad
-        npm install
-
-    - name: Copy gradle plugin
-      run: |
-        mkdir -p AdvancedNotepad/android/node_modules/@react-native
-        cp -R AdvancedNotepad/node_modules/@react-native/gradle-plugin AdvancedNotepad/android/node_modules/@react-native/
-
-    - name: Create native_modules.gradle
-      run: |
-        mkdir -p AdvancedNotepad/android/android
-        echo "// This file is created by the GitHub Actions workflow" > AdvancedNotepad/android/android/native_modules.gradle
-
-    - name: Update build.gradle
-      run: |
-        sed -i 's/compileSdkVersion =35 .*/compileSdkVersion = 33/' AdvancedNotepad/android/android/build.gradle
-
-    - name: Make gradlew executable
-      run: chmod +x AdvancedNotepad/android/android/gradlew
+        java-version: '11'
+        distribution: 'adopt'
 
     - name: List directory contents
       run: |
         ls -R AdvancedNotepad/android
+
+    - name: Make gradlew executable
+      run: chmod +x AdvancedNotepad/android/android/gradlew
+
+    - name: Generate native_modules.gradle
+      run: |
+        cd AdvancedNotepad/android/android
+        # If native_modules.gradle doesn't exist, create an empty one
+        touch native_modules.gradle
 
     - name: Build with Gradle
       run: |
