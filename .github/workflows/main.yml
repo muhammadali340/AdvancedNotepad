@@ -41,7 +41,7 @@ jobs:
 
     - name: Update build.gradle
       run: |
-        sed -i 's/compileSdkVersion = .*/compileSdkVersion = 33/' AdvancedNotepad/android/android/build.gradle
+        sed -i 's/compileSdkVersion =35 .*/compileSdkVersion = 33/' AdvancedNotepad/android/android/build.gradle
 
     - name: Make gradlew executable
       run: chmod +x AdvancedNotepad/android/android/gradlew
