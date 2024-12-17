@@ -19,10 +19,6 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
-    - name: List directory contents
-      run: |
-        ls -R AdvancedNotepad
-
     - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
@@ -38,8 +34,17 @@ jobs:
         mkdir -p AdvancedNotepad/android/node_modules/@react-native
         ln -s ../../../../node_modules/@react-native/gradle-plugin AdvancedNotepad/android/node_modules/@react-native/gradle-plugin
 
+    - name: Create native_modules.gradle
+      run: |
+        mkdir -p AdvancedNotepad/android/android
+        echo "// This file is created by the GitHub Actions workflow" > AdvancedNotepad/android/android/native_modules.gradle
+
     - name: Make gradlew executable
       run: chmod +x AdvancedNotepad/android/android/gradlew
+
+    - name: List directory contents
+      run: |
+        ls -R AdvancedNotepad/android
 
     - name: Build with Gradle
       run: |
