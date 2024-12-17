@@ -21,16 +21,25 @@ jobs:
 
     - name: List directory contents
       run: |
-        ls -R AdvancedNotepad/android
+        ls -R AdvancedNotepad
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: |
+        cd AdvancedNotepad
+        npm install
+
+    - name: Create symlink for gradle plugin
+      run: |
+        mkdir -p AdvancedNotepad/android/node_modules/@react-native
+        ln -s ../../../../node_modules/@react-native/gradle-plugin AdvancedNotepad/android/node_modules/@react-native/gradle-plugin
 
     - name: Make gradlew executable
       run: chmod +x AdvancedNotepad/android/android/gradlew
-
-    - name: Generate native_modules.gradle
-      run: |
-        cd AdvancedNotepad/android/android
-        # If native_modules.gradle doesn't exist, create an empty one
-        touch native_modules.gradle
 
     - name: Build with Gradle
       run: |
