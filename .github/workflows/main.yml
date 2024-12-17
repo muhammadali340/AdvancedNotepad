@@ -39,6 +39,10 @@ jobs:
         mkdir -p AdvancedNotepad/android/android
         echo "// This file is created by the GitHub Actions workflow" > AdvancedNotepad/android/android/native_modules.gradle
 
+    - name: Update build.gradle
+      run: |
+        sed -i 's/compileSdkVersion = .*/compileSdkVersion = 33/' AdvancedNotepad/android/build.gradle
+
     - name: Make gradlew executable
       run: chmod +x AdvancedNotepad/android/android/gradlew
 
