@@ -29,10 +29,10 @@ jobs:
         cd AdvancedNotepad
         npm install
 
-    - name: Create symlink for gradle plugin
+    - name: Copy gradle plugin
       run: |
         mkdir -p AdvancedNotepad/android/node_modules/@react-native
-        ln -s ../../../../node_modules/@react-native/gradle-plugin AdvancedNotepad/android/node_modules/@react-native/gradle-plugin
+        cp -R AdvancedNotepad/node_modules/@react-native/gradle-plugin AdvancedNotepad/android/node_modules/@react-native/
 
     - name: Create native_modules.gradle
       run: |
