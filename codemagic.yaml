@@ -1,0 +1,22 @@
+workflows:
+  android-build:
+    name: Build Android
+    max_build_duration: 60 # minutes
+    environment:
+      vars:
+        ANDROID_KEYSTORE: Encrypted(...) # Add your keystore environment variable
+        ANDROID_KEYSTORE_PASSWORD: Encrypted(...) # Keystore password
+        ANDROID_KEY_ALIAS: Encrypted(...) # Key alias
+        ANDROID_KEY_PASSWORD: Encrypted(...) # Key password
+      node: 16.20.0 # Specify the Node.js version
+      flutter: stable # Specify Flutter version (if applicable)
+    scripts:
+      - name: Install dependencies
+        script: |
+          npm install
+      - name: Build Android
+        script: |
+          cd android/android
+          ./gradlew assembleRelease
+    artifacts:
+      - build/outputs/**/* # Collect generated APKs or AABs
